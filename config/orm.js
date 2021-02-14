@@ -16,6 +16,34 @@ const orm = {
     });
   },
 
+  formDataForManagers: (employeeId, cb) => {
+    const queryString = `Select id, CONCAT(first_name, ' ', last_name) as manager FROM employees WHERE id != ${employeeId};`;
+
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return cb(result);
+    });
+  },
+
+  formDataForDepartments: (cb) => {
+    const queryString = `Select id, name FROM departments;`;
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return cb(result);
+    })
+  },
+
+  formDataForRoles: (cb) => {
+    const queryString = `Select id, title FROM roles;`;
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return cb(result);
+    })
+  },
+
   getSingleEmployee: (id, cb) => {
     const queryString = `Select a.id, a.first_name, a.last_name, roles.title, 
         departments.name as department, roles.salary, CONCAT(b.first_name, ' ', b.last_name) as manager

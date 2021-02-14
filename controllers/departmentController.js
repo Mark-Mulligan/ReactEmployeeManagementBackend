@@ -8,6 +8,12 @@ router.get("/departments", (req, res) => {
   });
 });
 
+router.get("/departments/name-id", (req, res) => {
+  department.getDatarForForm(data => {
+    res.json(data);
+  });
+});
+
 //router.get("/departments/:id" (req, res) => {
   
 //})

@@ -11,6 +11,11 @@ const employee = {
       cb(response);
     });
   },
+  getManagersForForm: (employeeId, cb) => {
+    orm.formDataForManagers(employeeId, (response) => {
+      cb(response);
+    });
+  },
 };
 
 module.exports = employee;
