@@ -19,10 +19,9 @@ router.get("/employees/:id", (req, res) => {
 
 router.get("/employees/name-id/exclude-id/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id)
-  employee.getManagersForForm(id, (data) => {
+  employee.getManagersForForm(id, data => {
     res.json(data);
-  });
+  })
 });
 
 module.exports = router;

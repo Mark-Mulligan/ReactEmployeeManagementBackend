@@ -8,10 +8,4 @@ router.get("/roles", (req, res) => {
   });
 });
 
-router.get("/roles/name-id", (req, res) => {
-  role.getDatarForForm((data) => {
-    res.json(data);
-  });
-});
-
 module.exports = router;

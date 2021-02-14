@@ -6,11 +6,6 @@ const role = {
       cb(response);
     });
   },
-  getDatarForForm: (cb) => {
-    orm.formDataForRoles((response) => {
-      cb(response);
-    });
-  },
 };
 
 module.exports = role;

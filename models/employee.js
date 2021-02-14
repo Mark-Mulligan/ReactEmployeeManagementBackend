@@ -12,9 +12,16 @@ const employee = {
     });
   },
   getManagersForForm: (employeeId, cb) => {
-    orm.formDataForManagers(employeeId, (response) => {
-      cb(response);
-    });
+    orm.simpleSelectWithWhere(
+      `id, CONCAT(first_name, ' ', last_name) as manager`,
+      "employees",
+      "id",
+      "!=",
+      employeeId,
+      (response) => {
+        cb(response);
+      }
+    );
   },
 };
 

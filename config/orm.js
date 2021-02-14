@@ -16,9 +16,8 @@ const orm = {
     });
   },
 
-  formDataForManagers: (employeeId, cb) => {
-    const queryString = `Select id, CONCAT(first_name, ' ', last_name) as manager FROM employees WHERE id != ${employeeId};`;
-
+  simpleSelect: (columns, table, cb) => {
+    const queryString = `SELECT ${columns} FROM ${table};`;
     connection.query(queryString, (err, result) => {
       if (err) throw err;
       console.log(result);
@@ -26,22 +25,13 @@ const orm = {
     });
   },
 
-  formDataForDepartments: (cb) => {
-    const queryString = `Select id, name FROM departments;`;
+  simpleSelectWithWhere: (columns, table, whereKey, whereComparison, whereValue, cb) => {
+    const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ${whereValue};`;
     connection.query(queryString, (err, result) => {
       if (err) throw err;
       console.log(result);
       return cb(result);
-    })
-  },
-
-  formDataForRoles: (cb) => {
-    const queryString = `Select id, title FROM roles;`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
-    })
+    });
   },
 
   getSingleEmployee: (id, cb) => {
@@ -84,9 +74,9 @@ const orm = {
 
     connection.query(queryString, (err, result) => {
       if (err) throw err;
-      return cb(result)
-    })
-  }
+      return cb(result);
+    });
+  },
 };
 
 module.exports = orm;

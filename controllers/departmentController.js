@@ -9,13 +9,16 @@ router.get("/departments", (req, res) => {
 });
 
 router.get("/departments/name-id", (req, res) => {
-  department.getDatarForForm(data => {
+  department.getNamesAndIds((data) => {
     res.json(data);
   });
 });
 
-//router.get("/departments/:id" (req, res) => {
-  
-//})
+router.get("/departments/:id/roles", (req, res) => {
+  const departmentId = req.params.id;
+  department.getRoles(departmentId, (data) => {
+    res.json(data);
+  });
+});
 
 module.exports = router;

@@ -6,10 +6,22 @@ const department = {
       cb(response);
     });
   },
-  getDatarForForm: (cb) => {
-    orm.formDataForDepartments((response) => {
+  getNamesAndIds: (cb) => {
+    orm.simpleSelect("name, id", "departments", (response) => {
       cb(response);
     });
+  },
+  getRoles: (departmentId, cb) => {
+    orm.simpleSelectWithWhere(
+      "title, id",
+      "roles",
+      "department_id",
+      "=",
+      departmentId,
+      (response) => {
+        cb(response);
+      }
+    );
   },
 };
 
