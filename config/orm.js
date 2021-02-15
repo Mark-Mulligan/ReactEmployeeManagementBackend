@@ -1,4 +1,5 @@
 const connection = require("./connection.js");
+const util = require("../util/util.js");
 
 const orm = {
   getAllEmployees: (orderBy, cb) => {
@@ -61,13 +62,13 @@ const orm = {
 
   getAllDepartments: (cb) => {
     const queryString = `SELECT departments.id, departments.name, 
-    count(roles.department_id) as employees, 
+    count(employees.id) as employees, 
     count(distinct roles.id) as roles, 
     SUM(roles.salary) as departmentUtilization       
     from departments
-    join roles
+    left join roles
     on (roles.department_id = departments.id)
-    join employees
+    left join employees
     on (employees.role_id = roles.id)
     group by
         departments.id;`;
@@ -77,6 +78,14 @@ const orm = {
       return cb(result);
     });
   },
+
+  simpleInsert: (table, columnsArr, userValuesArr, cb) => {
+    const queryString = `INSERT INTO ?? (??) VALUES (?)`;
+    connection.query(queryString, [table, columnsArr, userValuesArr], (err, result) => {
+      if (err) throw err;
+      return cb(result);
+    });
+  }
 };
 
 module.exports = orm;

@@ -23,6 +23,11 @@ const department = {
       }
     );
   },
+  create: (valuesArr, cb) => {
+    orm.simpleInsert("departments", ['name'], valuesArr, (response) => {
+      cb(response);
+    });
+  },
 };
 
 module.exports = department;

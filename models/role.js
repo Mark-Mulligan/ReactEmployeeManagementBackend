@@ -6,6 +6,11 @@ const role = {
       cb(response);
     });
   },
+  create: (userValuesArr, cb) => {
+    orm.simpleInsert('roles', ['title', 'salary', 'department_id'], userValuesArr, response => {
+      cb(response);
+    })
+  }
 };
 
 module.exports = role;

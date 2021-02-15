@@ -8,6 +8,13 @@ router.get("/departments", (req, res) => {
   });
 });
 
+router.post("/departments", (req, res) => {
+  const departmentName = req.body.departmentName;
+  department.create([departmentName], (data) => {
+    res.json(data);
+  });
+});
+
 router.get("/departments/name-id", (req, res) => {
   department.getNamesAndIds((data) => {
     res.json(data);
@@ -16,7 +23,7 @@ router.get("/departments/name-id", (req, res) => {
 
 router.get("/departments/:id/roles", (req, res) => {
   const departmentId = req.params.id;
-  department.getRoles(departmentId, (data) => {
+  department.getRoles([departmentId], (data) => {
     res.json(data);
   });
 });
