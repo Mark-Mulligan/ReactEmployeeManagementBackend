@@ -1,8 +1,8 @@
 const orm = require("../config/orm");
 
 const role = {
-  getAll: (cb) => {
-    orm.getAllRoles((response) => {
+  getTableData: (cb) => {
+    orm.getRoleTableData((response) => {
       cb(response);
     });
   },

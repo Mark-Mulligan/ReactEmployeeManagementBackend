@@ -1,8 +1,43 @@
 const connection = require("./connection.js");
-const util = require("../util/util.js");
 
 const orm = {
-  getAllEmployees: (orderBy, cb) => {
+  simpleSelect: (columns, table, cb) => {
+    const queryString = `SELECT ${columns} FROM ${table};`;
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      //console.log(result);
+      return cb(result);
+    });
+  },
+
+  simpleSelectWithWhere: (columns, table, whereKey, whereComparison, whereValue, cb) => {
+    const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ${whereValue};`;
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      //console.log(result);
+      return cb(result);
+    });
+  },
+
+  simpleSelectWithWhere2: (columns, table, whereKey, whereComparison, userWhereValue, cb) => {
+    const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ?;`;
+    connection.query(queryString, [userWhereValue], (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return cb(result);
+    })
+  },
+
+  simpleInsert: (table, columnsArr, userValuesArr, cb) => {
+    const queryString = `INSERT INTO ?? (??) VALUES (?)`;
+    console.log(queryString);
+    connection.query(queryString, [table, columnsArr, userValuesArr], (err, result) => {
+      if (err) throw err;
+      return cb(result);
+    });
+  },
+
+  getEmployeeTableData: (orderBy, cb) => {
     const queryString = `Select a.id, a.first_name, a.last_name, roles.title, 
         departments.name as department, roles.salary, CONCAT(b.first_name, ' ', b.last_name) as manager
         FROM employees a join roles on a.role_id = roles.id 
@@ -17,27 +52,9 @@ const orm = {
     });
   },
 
-  simpleSelect: (columns, table, cb) => {
-    const queryString = `SELECT ${columns} FROM ${table};`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
-    });
-  },
-
-  simpleSelectWithWhere: (columns, table, whereKey, whereComparison, whereValue, cb) => {
-    const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ${whereValue};`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
-    });
-  },
-
   getSingleEmployee: (id, cb) => {
-    const queryString = `Select a.id, a.first_name, a.last_name, roles.title, 
-        departments.name as department, roles.salary, CONCAT(b.first_name, ' ', b.last_name) as manager
+    const queryString = `Select a.id, a.first_name, a.last_name, roles.title, roles.id as role_id, departments.id as department_id, 
+        departments.name as department, roles.salary, a.manager_id, CONCAT(b.first_name, ' ', b.last_name) as manager
         FROM employees a join roles on a.role_id = roles.id 
         join departments on roles.department_id = departments.id
         left join employees b on b.id = a.manager_id or a.manager_id = null
@@ -45,12 +62,12 @@ const orm = {
 
     connection.query(queryString, (err, result) => {
       if (err) throw err;
-      console.log(result);
+      //console.log(result);
       return cb(result);
     });
   },
 
-  getAllRoles: (cb) => {
+  getRoleTableData: (cb) => {
     const queryString = `select roles.id, title, salary, departments.name as department from roles 
         join departments where roles.department_id = departments.id;`;
 
@@ -60,7 +77,7 @@ const orm = {
     });
   },
 
-  getAllDepartments: (cb) => {
+  getDepartmentTableData: (cb) => {
     const queryString = `SELECT departments.id, departments.name, 
     count(employees.id) as employees, 
     count(distinct roles.id) as roles, 
@@ -74,14 +91,6 @@ const orm = {
         departments.id;`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
-    });
-  },
-
-  simpleInsert: (table, columnsArr, userValuesArr, cb) => {
-    const queryString = `INSERT INTO ?? (??) VALUES (?)`;
-    connection.query(queryString, [table, columnsArr, userValuesArr], (err, result) => {
       if (err) throw err;
       return cb(result);
     });

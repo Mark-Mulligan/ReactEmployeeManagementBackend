@@ -1,10 +1,10 @@
 const express = require("express");
-const { getRoles } = require("../models/department");
+const { getTableData: getRoles } = require("../models/department");
 const router = express.Router();
 const role = require("../models/role");
 
 router.get("/roles", (req, res) => {
-  role.getAll((data) => {
+  role.getTableData((data) => {
     res.json(data);
   });
 });
