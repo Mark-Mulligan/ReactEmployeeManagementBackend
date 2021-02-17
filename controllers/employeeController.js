@@ -26,7 +26,6 @@ router.post("/employees", (req, res) => {
 });
 
 router.get("/employees/name-id", (req, res) => {
-  console.log(req.query);
   if (req.query.excludeid) {
     employee.getManagersForEdit(req.query.excludeid, (data) => {
       res.json(data);
@@ -50,13 +49,13 @@ router.get("/employee/:id", (req, res) => {
 router.put("/employee/:id", (req, res) => {
   const id = req.params.id;
   let { firstName, lastName, roleId, managerId } = req.body;
-  
+
   console.log(roleId, typeof roleId);
   console.log(managerId, typeof managerId);
 
-  employee.update([firstName, lastName, roleId, managerId], id, data => {
+  employee.update([firstName, lastName, roleId, managerId], id, (data) => {
     res.json(data);
-  })
-})
+  });
+});
 
 module.exports = router;
