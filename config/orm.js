@@ -9,7 +9,6 @@ const orm = {
       return cb(result);
     });
   },
-
   simpleUpdate: (table, updateKeysArr, userValuesArr, targetId, cb) => {
     let setStatementSql = "";
     for (let i = 0; i < updateKeysArr.length; i++) {
@@ -30,7 +29,7 @@ const orm = {
       }
     );
   },
-
+  
   simpleSelectWithWhere: (
     columns,
     table,
@@ -62,7 +61,6 @@ const orm = {
       return cb(result);
     });
   },
-
   simpleInsert: (table, columnsArr, userValuesArr, cb) => {
     const queryString = `INSERT INTO ?? (??) VALUES (?)`;
     console.log(queryString);
@@ -75,7 +73,15 @@ const orm = {
       }
     );
   },
+  simpleDelete: (table, whereKey, whereComparison, userWhereValue, cb) => {
+    const queryString = `DELETE FROM ${table} where ${whereKey} ${whereComparison} ?;`;
 
+    connection.query(queryString, [userWhereValue], (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return cb(result);
+    })
+  },
   getEmployeeTableData: (orderBy, cb) => {
     const queryString = `Select a.id, a.first_name, a.last_name, roles.title, 
         departments.name as department, roles.salary, CONCAT(b.first_name, ' ', b.last_name) as manager
@@ -133,7 +139,7 @@ const orm = {
       if (err) throw err;
       return cb(result);
     });
-  },
+  }
 };
 
 module.exports = orm;

@@ -53,6 +53,11 @@ const employee = {
       }
     );
   },
+  deleteOne: (userWhereValue, cb) => {
+    orm.simpleDelete('employees', 'id', '=', userWhereValue, response => {
+      cb(response);
+    })
+  }
 };
 
 module.exports = employee;

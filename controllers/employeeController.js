@@ -58,4 +58,12 @@ router.put("/employee/:id", (req, res) => {
   });
 });
 
+router.delete("/employee/:id", (req, res) => {
+  const id = req.params.id;
+
+  employee.deleteOne(id, data => {
+    res.json(data);
+  })
+})
+
 module.exports = router;
