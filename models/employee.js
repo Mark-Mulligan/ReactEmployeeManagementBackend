@@ -11,13 +11,6 @@ const employee = {
       cb(response);
     });
   },
-  getEditData: (employeeId, cb) => {
-    orm.simpleSelect(
-      "first_name, last_name, role_id, manager_id",
-      "employees",
-      cb
-    );
-  },
   getManagersForForm: (cb) => {
     orm.simpleSelect(
       `id, CONCAT(first_name, ' ', last_name) as manager`,
@@ -44,6 +37,17 @@ const employee = {
       "employees",
       ["first_name", "last_name", "role_id", "manager_id"],
       userValuesArr,
+      (response) => {
+        cb(response);
+      }
+    );
+  },
+  update: (userValuesArr, employeeId, cb) => {
+    orm.simpleUpdate(
+      "employees",
+      ["first_name", "last_name", "role_id", "manager_id"],
+      userValuesArr,
+      employeeId,
       (response) => {
         cb(response);
       }

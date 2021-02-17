@@ -10,7 +10,35 @@ const orm = {
     });
   },
 
-  simpleSelectWithWhere: (columns, table, whereKey, whereComparison, whereValue, cb) => {
+  simpleUpdate: (table, updateKeysArr, userValuesArr, targetId, cb) => {
+    let setStatementSql = "";
+    for (let i = 0; i < updateKeysArr.length; i++) {
+      if (i === updateKeysArr.length - 1) {
+        setStatementSql += `${updateKeysArr[i]} = ?`;
+      } else {
+        setStatementSql += `${updateKeysArr[i]} = ?,`;
+      }
+    }
+    const queryString = `UPDATE ${table} SET ${setStatementSql} WHERE id = ?;`;
+    connection.query(
+      queryString,
+      [...userValuesArr, targetId],
+      (err, result) => {
+        console.log(queryString);
+        if (err) throw err;
+        return cb(result);
+      }
+    );
+  },
+
+  simpleSelectWithWhere: (
+    columns,
+    table,
+    whereKey,
+    whereComparison,
+    whereValue,
+    cb
+  ) => {
     const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ${whereValue};`;
     connection.query(queryString, (err, result) => {
       if (err) throw err;
@@ -19,22 +47,33 @@ const orm = {
     });
   },
 
-  simpleSelectWithWhere2: (columns, table, whereKey, whereComparison, userWhereValue, cb) => {
+  simpleSelectWithWhere2: (
+    columns,
+    table,
+    whereKey,
+    whereComparison,
+    userWhereValue,
+    cb
+  ) => {
     const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ?;`;
     connection.query(queryString, [userWhereValue], (err, result) => {
       if (err) throw err;
       console.log(result);
       return cb(result);
-    })
+    });
   },
 
   simpleInsert: (table, columnsArr, userValuesArr, cb) => {
     const queryString = `INSERT INTO ?? (??) VALUES (?)`;
     console.log(queryString);
-    connection.query(queryString, [table, columnsArr, userValuesArr], (err, result) => {
-      if (err) throw err;
-      return cb(result);
-    });
+    connection.query(
+      queryString,
+      [table, columnsArr, userValuesArr],
+      (err, result) => {
+        if (err) throw err;
+        return cb(result);
+      }
+    );
   },
 
   getEmployeeTableData: (orderBy, cb) => {
@@ -94,7 +133,7 @@ const orm = {
       if (err) throw err;
       return cb(result);
     });
-  }
+  },
 };
 
 module.exports = orm;
