@@ -21,7 +21,7 @@ const employee = {
     );
   },
   getManagersForEdit: (userWhereValue, cb) => {
-    orm.simpleSelectWithWhere2(
+    orm.simpleSelectWithWhere(
       `id, CONCAT(first_name, ' ', last_name) as manager`,
       "employees",
       "id",

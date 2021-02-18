@@ -11,13 +11,14 @@ router.get("/employees", (req, res) => {
 
 router.post("/employees", (req, res) => {
   const { firstName, lastName, roleId, managerId } = req.body;
+
   if (managerId === 0) {
-    employee.create([firstName, lastName, Number(roleId), null], (data) => {
+    employee.create([firstName, lastName, roleId, null], (data) => {
       res.json(data);
     });
   } else {
     employee.create(
-      [firstName, lastName, Number(roleId), Number(managerId)],
+      [firstName, lastName, roleId, managerId],
       (data) => {
         res.json(data);
       }
@@ -40,7 +41,6 @@ router.get("/employees/name-id", (req, res) => {
 // returns single employee
 router.get("/employee/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id);
   employee.getOne(id, (data) => {
     res.json(data);
   });
@@ -50,9 +50,6 @@ router.put("/employee/:id", (req, res) => {
   const id = req.params.id;
   let { firstName, lastName, roleId, managerId } = req.body;
 
-  console.log(roleId, typeof roleId);
-  console.log(managerId, typeof managerId);
-
   employee.update([firstName, lastName, roleId, managerId], id, (data) => {
     res.json(data);
   });
@@ -61,9 +58,9 @@ router.put("/employee/:id", (req, res) => {
 router.delete("/employee/:id", (req, res) => {
   const id = req.params.id;
 
-  employee.deleteOne(id, data => {
+  employee.deleteOne(id, (data) => {
     res.json(data);
-  })
-})
+  });
+});
 
 module.exports = router;

@@ -18,6 +18,7 @@ const orm = {
         setStatementSql += `${updateKeysArr[i]} = ?,`;
       }
     }
+    
     const queryString = `UPDATE ${table} SET ${setStatementSql} WHERE id = ?;`;
     connection.query(
       queryString,
@@ -29,24 +30,7 @@ const orm = {
       }
     );
   },
-  
   simpleSelectWithWhere: (
-    columns,
-    table,
-    whereKey,
-    whereComparison,
-    whereValue,
-    cb
-  ) => {
-    const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ${whereValue};`;
-    connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      //console.log(result);
-      return cb(result);
-    });
-  },
-
-  simpleSelectWithWhere2: (
     columns,
     table,
     whereKey,
@@ -92,7 +76,6 @@ const orm = {
 
     connection.query(queryString, (err, result) => {
       if (err) throw err;
-      console.log(result);
       return cb(result);
     });
   },
