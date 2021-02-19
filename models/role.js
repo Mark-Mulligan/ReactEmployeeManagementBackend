@@ -6,6 +6,11 @@ const role = {
       cb(response);
     });
   },
+  getOne: (roleId, cb) => {
+    orm.getSingleRole(roleId, (response) => {
+      cb(response);
+    });
+  },
   create: (userValuesArr, cb) => {
     orm.simpleInsert(
       "roles",

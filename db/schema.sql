@@ -17,7 +17,7 @@ CREATE TABLE roles (
   department_id INT,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-  FOREIGN KEY (department_id) REFERENCES departments(id) 
+  FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
 );
 
 CREATE TABLE employees (
@@ -28,5 +28,5 @@ CREATE TABLE employees (
     manager_id INT,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-    FOREIGN KEY (role_id) REFERENCES roles(id) 
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );

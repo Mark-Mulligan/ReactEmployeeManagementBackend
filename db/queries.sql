@@ -48,3 +48,10 @@ on (roles.department_id = departments.id)
 join employees
 on (employees.role_id = roles.id)
 Where departments.id = 1;
+
+/* Get Additional data for Role Table */
+SELECT roles.id, roles.title, roles.salary, 
+departments.name, count(employees.id) as employees, sum(roles.salary) as roleUtilization
+from roles left join employees on (roles.id = employees.role_id)
+left join departments on (roles.department_id = departments.id)
+group by roles.id;

@@ -14,16 +14,23 @@ router.post("/roles", (req, res) => {
   const salary = Number(req.body.salary);
   const departmentId = Number(req.body.departmentId);
 
-  role.create([title, salary, departmentId], data => {
+  role.create([title, salary, departmentId], (data) => {
     res.json(data);
-  })
-})
+  });
+});
 
-router.delete("roles/:id", (req, res) => {
+router.get("role/:id", (req, res) => {
   const roleId = req.params.id;
-  role.delete(roleId, data => {
+  role.getOne(roleId, (data) => {
     res.json(data);
-  })
-})
+  });
+});
+
+router.delete("role/:id", (req, res) => {
+  const roleId = req.params.id;
+  role.delete(roleId, (data) => {
+    res.json(data);
+  });
+});
 
 module.exports = router;

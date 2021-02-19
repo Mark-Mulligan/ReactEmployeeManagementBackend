@@ -15,7 +15,7 @@ router.post("/departments", (req, res) => {
   });
 });
 
-router.delete("/departments/:id", (req, res) => {
+router.delete("/department/:id", (req, res) => {
   const departmentId = req.params.departmentId;
   department.delete(departmentId, data => {
     res.json(data);
