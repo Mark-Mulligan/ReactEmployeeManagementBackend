@@ -22,6 +22,11 @@ const department = {
       cb(response);
     });
   },
+  delete: (userWhereValue, cb) => {
+    orm.simpleDelete("departments", "id", "=", userWhereValue, response => {
+      cb(response);
+    })
+  }
 };
 
 module.exports = department;

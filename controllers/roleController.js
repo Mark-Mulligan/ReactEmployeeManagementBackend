@@ -19,4 +19,11 @@ router.post("/roles", (req, res) => {
   })
 })
 
+router.delete("roles/:id", (req, res) => {
+  const roleId = req.params.id;
+  role.delete(roleId, data => {
+    res.json(data);
+  })
+})
+
 module.exports = router;
