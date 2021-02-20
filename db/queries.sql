@@ -55,3 +55,10 @@ departments.name, count(employees.id) as employees, sum(roles.salary) as roleUti
 from roles left join employees on (roles.id = employees.role_id)
 left join departments on (roles.department_id = departments.id)
 group by roles.id;
+
+/* Select invdividual role */
+SELECT roles.id, roles.title, roles.salary, 
+departments.name, count(employees.id) as employees, sum(roles.salary) as roleUtilization
+from roles left join employees on (roles.id = employees.role_id)
+left join departments on (roles.department_id = departments.id)
+group by roles.id having roles.id = 3;

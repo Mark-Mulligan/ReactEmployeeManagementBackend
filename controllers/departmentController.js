@@ -15,6 +15,13 @@ router.post("/departments", (req, res) => {
   });
 });
 
+router.get("/department/:id", (req, res) => {
+  const departmentId = req.params.departmentId;
+  department.getOne(departmentId, data => {
+    res.json(data);
+  })
+})
+
 router.delete("/department/:id", (req, res) => {
   const departmentId = req.params.departmentId;
   department.delete(departmentId, data => {

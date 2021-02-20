@@ -1,3 +1,4 @@
+const department = require("../models/department.js");
 const connection = require("./connection.js");
 
 const orm = {
@@ -103,6 +104,27 @@ const orm = {
     group by roles.id having roles.id = ?;`;
 
     connection.query(queryString, [roleId], (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      return cb(result);
+    });
+  },
+
+  getSingleDepartment: (departmentId, cb) => {
+    const queryString = `SELECT departments.id, departments.name, 
+    count(employees.id) as employees, 
+    count(distinct roles.id) as roles, 
+    SUM(roles.salary) as departmentUtilization       
+    from departments
+    left join roles
+    on (roles.department_id = departments.id)
+    left join employees
+    on (employees.role_id = roles.id)
+    group by
+        departments.id
+	  having departments.id = ?;`;
+
+    connection.query(queryString, [departmentId], (err, result) => {
       if (err) throw err;
       console.log(result);
       return cb(result);
