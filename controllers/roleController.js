@@ -19,14 +19,14 @@ router.post("/roles", (req, res) => {
   });
 });
 
-router.get("role/:id", (req, res) => {
+router.get("/role/:id", (req, res) => {
   const roleId = req.params.id;
   role.getOne(roleId, (data) => {
     res.json(data);
   });
 });
 
-router.delete("role/:id", (req, res) => {
+router.delete("/role/:id", (req, res) => {
   const roleId = req.params.id;
   role.delete(roleId, (data) => {
     res.json(data);
