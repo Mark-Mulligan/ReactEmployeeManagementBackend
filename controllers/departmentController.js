@@ -16,18 +16,18 @@ router.post("/departments", (req, res) => {
 });
 
 router.get("/department/:id", (req, res) => {
-  const departmentId = req.params.departmentId;
-  department.getOne(departmentId, data => {
+  const departmentId = req.params.id;
+  department.getOne(departmentId, (data) => {
     res.json(data);
-  })
-})
+  });
+});
 
 router.delete("/department/:id", (req, res) => {
-  const departmentId = req.params.departmentId;
-  department.delete(departmentId, data => {
+  const departmentId = req.params.id;
+  department.delete(departmentId, (data) => {
     res.json(data);
-  })
-})
+  });
+});
 
 router.get("/departments/name-id", (req, res) => {
   department.getNamesAndIds((data) => {

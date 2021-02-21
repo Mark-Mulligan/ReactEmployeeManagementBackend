@@ -1,4 +1,3 @@
-const department = require("../models/department.js");
 const connection = require("./connection.js");
 
 const orm = {
@@ -31,14 +30,7 @@ const orm = {
       }
     );
   },
-  simpleSelectWithWhere: (
-    columns,
-    table,
-    whereKey,
-    whereComparison,
-    userWhereValue,
-    cb
-  ) => {
+  simpleSelectWithWhere: (columns, table, whereKey, whereComparison, userWhereValue, cb) => {
     const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ?;`;
     connection.query(queryString, [userWhereValue], (err, result) => {
       if (err) throw err;
@@ -80,7 +72,6 @@ const orm = {
       return cb(result);
     });
   },
-
   getSingleEmployee: (id, cb) => {
     const queryString = `Select a.id, a.first_name, a.last_name, roles.title, roles.id as role_id, departments.id as department_id, 
         departments.name as department, roles.salary, a.manager_id, CONCAT(b.first_name, ' ', b.last_name) as manager
@@ -95,7 +86,6 @@ const orm = {
       return cb(result);
     });
   },
-
   getSingleRole: (roleId, cb) => {
     const queryString = `SELECT roles.id, roles.title, roles.salary, 
     departments.name, count(employees.id) as employees, sum(roles.salary) as roleUtilization
