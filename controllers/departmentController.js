@@ -22,6 +22,14 @@ router.get("/department/:id", (req, res) => {
   });
 });
 
+router.put("/department/:id", (req, res) => {
+  const departmentId = req.params.id;
+  let { departmentName } = req.body;
+  department.update([departmentName], departmentId, (data) => {
+    res.json(data);
+  })
+})
+
 router.delete("/department/:id", (req, res) => {
   const departmentId = req.params.id;
   department.delete(departmentId, (data) => {

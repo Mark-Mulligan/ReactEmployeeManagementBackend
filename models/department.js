@@ -33,6 +33,17 @@ const department = {
       cb(response);
     });
   },
+  update: (userValuesArr, departmentId, cb) => {
+    orm.simpleUpdate(
+      "departments",
+      ["name"],
+      userValuesArr,
+      departmentId,
+      (response) => {
+        cb(response);
+      }
+    );
+  },
   delete: (userWhereValue, cb) => {
     orm.simpleDelete("departments", "id", "=", userWhereValue, (response) => {
       cb(response);
