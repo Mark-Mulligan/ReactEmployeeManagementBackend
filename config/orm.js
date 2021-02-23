@@ -88,7 +88,7 @@ const orm = {
   },
   getSingleRole: (roleId, cb) => {
     const queryString = `SELECT roles.id, roles.title, roles.salary, 
-    departments.name, count(employees.id) as employees, sum(roles.salary) as roleUtilization
+    departments.name, departments.id as department_id, count(employees.id) as employees, sum(roles.salary) as roleUtilization
     from roles left join employees on (roles.id = employees.role_id)
     left join departments on (roles.department_id = departments.id)
     group by roles.id having roles.id = ?;`;

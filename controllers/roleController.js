@@ -26,6 +26,14 @@ router.get("/role/:id", (req, res) => {
   });
 });
 
+router.put("/role/:id", (req, res) => {
+  const roleId = req.params.id;
+  const { title, salary, departmentId } = req.body;
+  role.update([title, salary, departmentId], roleId, (data) => {
+    res.json(data);
+  });
+});
+
 router.delete("/role/:id", (req, res) => {
   const roleId = req.params.id;
   role.delete(roleId, (data) => {

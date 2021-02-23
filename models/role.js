@@ -21,6 +21,17 @@ const role = {
       }
     );
   },
+  update: (userValuesArr, roleId, cb) => {
+    orm.simpleUpdate(
+      "roles",
+      ["title", "salary", "department_id"],
+      userValuesArr,
+      roleId,
+      (response) => {
+        cb(response);
+      }
+    );
+  },
   delete: (userWhereValue, cb) => {
     orm.simpleDelete("roles", "id", "=", userWhereValue, (response) => {
       cb(response);
