@@ -41,4 +41,10 @@ router.delete("/role/:id", (req, res) => {
   });
 });
 
+router.get("/api/roles/chartdata", (req, res) => {
+  role.getBarChartData((data) => {
+    res.json(data);
+  });
+});
+
 module.exports = router;

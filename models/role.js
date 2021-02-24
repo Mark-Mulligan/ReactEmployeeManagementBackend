@@ -37,6 +37,11 @@ const role = {
       cb(response);
     });
   },
+  getBarChartData: (cb) => {
+    orm.getRoleBarChartData((response) => {
+      cb(response);
+    });
+  },
 };
 
 module.exports = role;

@@ -30,7 +30,14 @@ const orm = {
       }
     );
   },
-  simpleSelectWithWhere: (columns, table, whereKey, whereComparison, userWhereValue, cb) => {
+  simpleSelectWithWhere: (
+    columns,
+    table,
+    whereKey,
+    whereComparison,
+    userWhereValue,
+    cb
+  ) => {
     const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ?;`;
     connection.query(queryString, [userWhereValue], (err, result) => {
       if (err) throw err;
@@ -143,6 +150,15 @@ const orm = {
     on (employees.role_id = roles.id)
     group by
         departments.id;`;
+
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      return cb(result);
+    });
+  },
+
+  getRoleBarChartData: (cb) => {
+    const queryString = `Select roles.salary, roles.title from roles order by roles.salary;`;
 
     connection.query(queryString, (err, result) => {
       if (err) throw err;
