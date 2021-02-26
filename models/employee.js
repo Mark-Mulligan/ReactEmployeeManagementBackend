@@ -6,6 +6,11 @@ const employee = {
       cb(response);
     });
   },
+  getBarChartData: (cb) => {
+    orm.getEmployeeBarChartData((response) => {
+      cb(response);
+    });
+  },
   getOne: (id, cb) => {
     orm.getSingleEmployee(id, (response) => {
       cb(response);
@@ -54,10 +59,10 @@ const employee = {
     );
   },
   deleteOne: (userWhereValue, cb) => {
-    orm.simpleDelete('employees', 'id', '=', userWhereValue, response => {
+    orm.simpleDelete("employees", "id", "=", userWhereValue, (response) => {
       cb(response);
-    })
-  }
+    });
+  },
 };
 
 module.exports = employee;

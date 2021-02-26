@@ -5,7 +5,6 @@ const orm = {
     const queryString = `SELECT ${columns} FROM ${table};`;
     connection.query(queryString, (err, result) => {
       if (err) throw err;
-      //console.log(result);
       return cb(result);
     });
   },
@@ -128,13 +127,16 @@ const orm = {
     });
   },
 
-  getRoleTableData: (cb) => {
-    const queryString = `select roles.id, title, salary, departments.name as department from roles 
+  getRoleTableData: (cb, errCb) => {
+    const queryString = `Select roles.id, title, salary, departments.name as department from roles 
         join departments where roles.department_id = departments.id;`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
 
@@ -165,6 +167,16 @@ const orm = {
       return cb(result);
     });
   },
+  getEmployeeBarChartData: (cb) => {
+    const queryString = `SELECT COUNT(employees.id) as employees_hired, YEAR(employees.date_hired) as year
+    FROM employees 
+    GROUP BY YEAR(employees.date_hired);`;
+
+    connection.query(queryString, (err, result) => {
+      if (err) throw err;
+      return cb(result);
+    })
+  }
 };
 
 module.exports = orm;

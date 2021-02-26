@@ -26,6 +26,7 @@ CREATE TABLE employees (
     last_name VARCHAR(30),
     role_id INT,
     manager_id INT,
+    date_hired DATE,
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE

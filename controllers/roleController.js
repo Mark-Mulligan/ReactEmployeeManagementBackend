@@ -1,12 +1,16 @@
 const express = require("express");
-const { getTableData: getRoles } = require("../models/department");
+//const { getTableData: getRoles } = require("../models/department");
 const router = express.Router();
 const role = require("../models/role");
 
 router.get("/roles", (req, res) => {
-  role.getTableData((data) => {
-    res.json(data);
-  });
+  role.getTableData(
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.post("/roles", (req, res) => {

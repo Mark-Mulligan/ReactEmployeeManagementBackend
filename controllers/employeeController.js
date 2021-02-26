@@ -17,12 +17,9 @@ router.post("/employees", (req, res) => {
       res.json(data);
     });
   } else {
-    employee.create(
-      [firstName, lastName, roleId, managerId],
-      (data) => {
-        res.json(data);
-      }
-    );
+    employee.create([firstName, lastName, roleId, managerId], (data) => {
+      res.json(data);
+    });
   }
 });
 
@@ -59,6 +56,12 @@ router.delete("/employee/:id", (req, res) => {
   const id = req.params.id;
 
   employee.deleteOne(id, (data) => {
+    res.json(data);
+  });
+});
+
+router.get("/api/employees/chartdata", (req, res) => {
+  employee.getBarChartData((data) => {
     res.json(data);
   });
 });
