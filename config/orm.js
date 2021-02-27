@@ -162,12 +162,15 @@ const orm = {
     });
   },
 
-  getRoleBarChartData: (cb) => {
+  getRoleBarChartData: (cb, errCb) => {
     const queryString = `Select roles.salary, roles.title from roles order by roles.salary;`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
   getEmployeeBarChartData: (cb) => {

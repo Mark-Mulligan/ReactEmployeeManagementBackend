@@ -2,7 +2,10 @@ const orm = require("../config/orm");
 
 const role = {
   getTableData: (cb, errCb) => {
-    orm.getRoleTableData((response) => cb(response), (err) => errCb(err));
+    orm.getRoleTableData(
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getOne: (roleId, cb) => {
     orm.getSingleRole(roleId, (response) => {
@@ -35,10 +38,11 @@ const role = {
       cb(response);
     });
   },
-  getBarChartData: (cb) => {
-    orm.getRoleBarChartData(response => {
-      cb(response);
-    });
+  getBarChartData: (cb, errCb) => {
+    orm.getRoleBarChartData(
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
 };
 
