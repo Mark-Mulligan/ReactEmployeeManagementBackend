@@ -78,7 +78,7 @@ const orm = {
       return cb(result);
     });
   },
-  getSingleEmployee: (id, cb) => {
+  getSingleEmployee: (id, cb, errCb) => {
     const queryString = `Select a.id, a.first_name, a.last_name, roles.title, roles.id as role_id, departments.id as department_id, 
         departments.name as department, roles.salary, a.manager_id, CONCAT(b.first_name, ' ', b.last_name) as manager
         FROM employees a join roles on a.role_id = roles.id 
@@ -87,9 +87,11 @@ const orm = {
         WHERE a.id = ${id}`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      //console.log(result);
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
   getSingleRole: (roleId, cb, errCb) => {

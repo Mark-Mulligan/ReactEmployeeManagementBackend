@@ -12,10 +12,12 @@ const employee = {
       (err) => errCb(err)
     );
   },
-  getOne: (id, cb) => {
-    orm.getSingleEmployee(id, (response) => {
-      cb(response);
-    });
+  getOne: (id, cb, errCb) => {
+    orm.getSingleEmployee(
+      id,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getManagersForForm: (cb) => {
     orm.simpleSelect(

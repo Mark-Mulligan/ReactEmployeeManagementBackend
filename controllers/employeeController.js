@@ -38,9 +38,14 @@ router.get("/employees/name-id", (req, res) => {
 // returns single employee
 router.get("/employee/:id", (req, res) => {
   const id = req.params.id;
-  employee.getOne(id, (data) => {
-    res.json(data);
-  });
+  employee.getOne(
+    id,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.put("/employee/:id", (req, res) => {
