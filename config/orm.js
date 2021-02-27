@@ -1,14 +1,17 @@
 const connection = require("./connection.js");
 
 const orm = {
-  simpleSelect: (columns, table, cb) => {
+  simpleSelect: (columns, table, cb, errCb) => {
     const queryString = `SELECT ${columns} FROM ${table};`;
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
-  simpleUpdate: (table, updateKeysArr, userValuesArr, targetId, cb) => {
+  simpleUpdate: (table, updateKeysArr, userValuesArr, targetId, cb, errCb) => {
     let setStatementSql = "";
     for (let i = 0; i < updateKeysArr.length; i++) {
       if (i === updateKeysArr.length - 1) {
@@ -23,9 +26,11 @@ const orm = {
       queryString,
       [...userValuesArr, targetId],
       (err, result) => {
-        console.log(queryString);
-        if (err) throw err;
-        return cb(result);
+        if (err) {
+          return errCb(err);
+        } else {
+          return cb(result);
+        }
       }
     );
   },
@@ -35,24 +40,30 @@ const orm = {
     whereKey,
     whereComparison,
     userWhereValue,
-    cb
+    cb,
+    errCb
   ) => {
     const queryString = `SELECT ${columns} FROM ${table} WHERE ${whereKey} ${whereComparison} ?;`;
     connection.query(queryString, [userWhereValue], (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
-  simpleInsert: (table, columnsArr, userValuesArr, cb) => {
+  simpleInsert: (table, columnsArr, userValuesArr, cb, errCb) => {
     const queryString = `INSERT INTO ?? (??) VALUES (?)`;
     console.log(queryString);
     connection.query(
       queryString,
       [table, columnsArr, userValuesArr],
       (err, result) => {
-        if (err) throw err;
-        return cb(result);
+        if (err) {
+          return errCb(err);
+        } else {
+          return cb(result);
+        }
       }
     );
   },

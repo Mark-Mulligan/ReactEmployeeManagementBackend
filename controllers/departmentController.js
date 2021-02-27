@@ -14,9 +14,11 @@ router.get("/departments", (req, res) => {
 
 router.post("/departments", (req, res) => {
   const departmentName = req.body.departmentName;
-  department.create([departmentName], (data) => {
-    res.json(data);
-  });
+  department.create([departmentName], (data) => res.json(data),
+  (err) => {
+    res.status(500);
+    res.json(err);
+  };
 });
 
 router.get("/department/:id", (req, res) => {
@@ -34,8 +36,10 @@ router.get("/department/:id", (req, res) => {
 router.put("/department/:id", (req, res) => {
   const departmentId = req.params.id;
   let { departmentName } = req.body;
-  department.update([departmentName], departmentId, (data) => {
-    res.json(data);
+  department.update([departmentName], departmentId, (data) => res.json(data),
+  (err) => {
+    res.status(500);
+    res.json(err);
   });
 });
 
@@ -52,15 +56,19 @@ router.delete("/department/:id", (req, res) => {
 });
 
 router.get("/departments/name-id", (req, res) => {
-  department.getNamesAndIds((data) => {
-    res.json(data);
+  department.getNamesAndIds((data) => res.json(data),
+  (err) => {
+    res.status(500);
+    res.json(err);
   });
 });
 
 router.get("/departments/:id/roles", (req, res) => {
   const departmentId = req.params.id;
-  department.getRolesInDepartment(departmentId, (data) => {
-    res.json(data);
+  department.getRolesInDepartment(departmentId, (data) => res.json(data),
+  (err) => {
+    res.status(500);
+    res.json(err);
   });
 });
 

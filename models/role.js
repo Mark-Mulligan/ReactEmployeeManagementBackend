@@ -14,25 +14,23 @@ const role = {
       (err) => errCb(err)
     );
   },
-  create: (userValuesArr, cb) => {
+  create: (userValuesArr, cb, errCb) => {
     orm.simpleInsert(
       "roles",
       ["title", "salary", "department_id"],
       userValuesArr,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
-  update: (userValuesArr, roleId, cb) => {
+  update: (userValuesArr, roleId, cb, errCb) => {
     orm.simpleUpdate(
       "roles",
       ["title", "salary", "department_id"],
       userValuesArr,
       roleId,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
   delete: (userWhereValue, cb, errCb) => {

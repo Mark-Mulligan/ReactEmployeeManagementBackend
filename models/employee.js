@@ -21,46 +21,42 @@ const employee = {
       (err) => errCb(err)
     );
   },
-  getManagersForForm: (cb) => {
+  getManagersForForm: (cb, errCb) => {
     orm.simpleSelect(
       `id, CONCAT(first_name, ' ', last_name) as manager`,
       "employees",
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
-  getManagersForEdit: (userWhereValue, cb) => {
+  getManagersForEdit: (userWhereValue, cb, errCb) => {
     orm.simpleSelectWithWhere(
       `id, CONCAT(first_name, ' ', last_name) as manager`,
       "employees",
       "id",
       "!=",
       userWhereValue,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
-  create: (userValuesArr, cb) => {
+  create: (userValuesArr, cb, errCb) => {
     orm.simpleInsert(
       "employees",
       ["first_name", "last_name", "role_id", "manager_id"],
       userValuesArr,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
-  update: (userValuesArr, employeeId, cb) => {
+  update: (userValuesArr, employeeId, cb, errCb) => {
     orm.simpleUpdate(
       "employees",
       ["first_name", "last_name", "role_id", "manager_id"],
       userValuesArr,
       employeeId,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
   deleteOne: (userWhereValue, cb, errCb) => {

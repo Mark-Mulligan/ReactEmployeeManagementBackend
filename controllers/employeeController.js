@@ -18,24 +18,32 @@ router.post("/employees", (req, res) => {
   const { firstName, lastName, roleId, managerId } = req.body;
 
   if (managerId === 0) {
-    employee.create([firstName, lastName, roleId, null], (data) => {
-      res.json(data);
+    employee.create([firstName, lastName, roleId, null], (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
     });
   } else {
-    employee.create([firstName, lastName, roleId, managerId], (data) => {
-      res.json(data);
+    employee.create([firstName, lastName, roleId, managerId], (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
     });
   }
 });
 
 router.get("/employees/name-id", (req, res) => {
   if (req.query.excludeid) {
-    employee.getManagersForEdit(req.query.excludeid, (data) => {
-      res.json(data);
+    employee.getManagersForEdit(req.query.excludeid, (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
     });
   } else {
-    employee.getManagersForForm((data) => {
-      res.json(data);
+    employee.getManagersForForm((data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
     });
   }
 });
@@ -57,19 +65,28 @@ router.put("/employee/:id", (req, res) => {
   const id = req.params.id;
   let { firstName, lastName, roleId, managerId } = req.body;
 
-  employee.update([firstName, lastName, roleId, managerId], id, (data) => {
-    res.json(data);
-  });
+  employee.update(
+    [firstName, lastName, roleId, managerId],
+    id,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.delete("/employee/:id", (req, res) => {
   const id = req.params.id;
 
-  employee.deleteOne(id, (data) => res.json(data),
-  (err) => {
-    res.status(500);
-    res.json(err);
-  });
+  employee.deleteOne(
+    id,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.get("/api/employees/chartdata", (req, res) => {

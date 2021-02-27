@@ -16,8 +16,10 @@ router.get("/roles", (req, res) => {
 router.post("/roles", (req, res) => {
   const { title, salary, departmentId } = req.body;
 
-  role.create([title, salary, departmentId], (data) => {
-    res.json(data);
+  role.create([title, salary, departmentId], (data) => res.json(data),
+  (err) => {
+    res.status(500);
+    res.json(err);
   });
 });
 
@@ -36,9 +38,15 @@ router.get("/role/:id", (req, res) => {
 router.put("/role/:id", (req, res) => {
   const roleId = req.params.id;
   const { title, salary, departmentId } = req.body;
-  role.update([title, salary, departmentId], roleId, (data) => {
-    res.json(data);
-  });
+  role.update(
+    [title, salary, departmentId],
+    roleId,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.delete("/role/:id", (req, res) => {

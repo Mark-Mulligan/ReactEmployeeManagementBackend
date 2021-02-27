@@ -14,37 +14,42 @@ const department = {
       (err) => errCb(err)
     );
   },
-  getNamesAndIds: (cb) => {
-    orm.simpleSelect(`name, id`, "departments", (response) => {
-      cb(response);
-    });
+  getNamesAndIds: (cb, errCb) => {
+    orm.simpleSelect(
+      `name, id`,
+      "departments",
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
-  getRolesInDepartment: (departmentId, cb) => {
+  getRolesInDepartment: (departmentId, cb, errCb) => {
     orm.simpleSelectWithWhere(
       "title, id",
       "roles",
       "department_id",
       "=",
       departmentId,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
-  create: (valuesArr, cb) => {
-    orm.simpleInsert("departments", ["name"], valuesArr, (response) => {
-      cb(response);
-    });
+  create: (valuesArr, cb, errCb) => {
+    orm.simpleInsert(
+      "departments",
+      ["name"],
+      valuesArr,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
-  update: (userValuesArr, departmentId, cb) => {
+  update: (userValuesArr, departmentId, cb, errCb) => {
     orm.simpleUpdate(
       "departments",
       ["name"],
       userValuesArr,
       departmentId,
-      (response) => {
-        cb(response);
-      }
+      (response) => cb(response),
+      (err) => errCb(err)
     );
   },
   delete: (userWhereValue, cb, errCb) => {
