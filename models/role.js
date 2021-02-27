@@ -7,10 +7,12 @@ const role = {
       (err) => errCb(err)
     );
   },
-  getOne: (roleId, cb) => {
-    orm.getSingleRole(roleId, (response) => {
-      cb(response);
-    });
+  getOne: (roleId, cb, errCb) => {
+    orm.getSingleRole(
+      roleId,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   create: (userValuesArr, cb) => {
     orm.simpleInsert(

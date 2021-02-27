@@ -92,7 +92,7 @@ const orm = {
       return cb(result);
     });
   },
-  getSingleRole: (roleId, cb) => {
+  getSingleRole: (roleId, cb, errCb) => {
     const queryString = `SELECT roles.id, roles.title, roles.salary, 
     departments.name, departments.id as department_id, count(employees.id) as employees, sum(roles.salary) as roleUtilization
     from roles left join employees on (roles.id = employees.role_id)
@@ -100,9 +100,11 @@ const orm = {
     group by roles.id having roles.id = ?;`;
 
     connection.query(queryString, [roleId], (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
 

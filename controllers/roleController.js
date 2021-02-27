@@ -23,9 +23,14 @@ router.post("/roles", (req, res) => {
 
 router.get("/role/:id", (req, res) => {
   const roleId = req.params.id;
-  role.getOne(roleId, (data) => {
-    res.json(data);
-  });
+  role.getOne(
+    roleId,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.put("/role/:id", (req, res) => {
