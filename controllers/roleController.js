@@ -14,9 +14,7 @@ router.get("/roles", (req, res) => {
 });
 
 router.post("/roles", (req, res) => {
-  const title = req.body.title;
-  const salary = Number(req.body.salary);
-  const departmentId = Number(req.body.departmentId);
+  const { title, salary, departmentId } = req.body;
 
   role.create([title, salary, departmentId], (data) => {
     res.json(data);

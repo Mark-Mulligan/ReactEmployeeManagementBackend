@@ -2,10 +2,20 @@ const express = require("express");
 const router = express.Router();
 const department = require("../models/department");
 
-router.get("/departments", (req, res) => {
+/* router.get("/departments", (req, res) => {
   department.getTableData((data) => {
     res.json(data);
   });
+}); */
+
+router.get("/departments", (req, res) => {
+  department.getTableData(
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.post("/departments", (req, res) => {

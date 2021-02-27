@@ -140,7 +140,7 @@ const orm = {
     });
   },
 
-  getDepartmentTableData: (cb) => {
+  getDepartmentTableData: (cb, errCb) => {
     const queryString = `SELECT departments.id, departments.name, 
     count(employees.id) as employees, 
     count(distinct roles.id) as roles, 
@@ -154,8 +154,11 @@ const orm = {
         departments.id;`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
 

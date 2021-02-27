@@ -1,10 +1,11 @@
 const orm = require("../config/orm");
 
 const department = {
-  getTableData: (cb) => {
-    orm.getDepartmentTableData((response) => {
-      cb(response);
-    });
+  getTableData: (cb, errCb) => {
+    orm.getDepartmentTableData(
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getOne: (departmentId, cb) => {
     orm.getSingleDepartment(departmentId, (response) => {
