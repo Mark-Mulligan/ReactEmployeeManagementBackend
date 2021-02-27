@@ -18,7 +18,7 @@ router.post("/departments", (req, res) => {
   (err) => {
     res.status(500);
     res.json(err);
-  };
+  });
 });
 
 router.get("/department/:id", (req, res) => {
