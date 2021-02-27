@@ -1,10 +1,12 @@
 const orm = require("../config/orm");
 
 const employee = {
-  getTableData: (orderby, cb) => {
-    orm.getEmployeeTableData(orderby, (response) => {
-      cb(response);
-    });
+  getTableData: (orderby, cb, errCb) => {
+    orm.getEmployeeTableData(
+      orderby,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getBarChartData: (cb, errCb) => {
     orm.getEmployeeBarChartData(
@@ -61,10 +63,15 @@ const employee = {
       }
     );
   },
-  deleteOne: (userWhereValue, cb) => {
-    orm.simpleDelete("employees", "id", "=", userWhereValue, (response) => {
-      cb(response);
-    });
+  deleteOne: (userWhereValue, cb, errCb) => {
+    orm.simpleDelete(
+      "employees",
+      "id",
+      "=",
+      userWhereValue,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
 };
 

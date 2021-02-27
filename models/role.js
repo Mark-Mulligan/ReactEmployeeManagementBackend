@@ -35,10 +35,15 @@ const role = {
       }
     );
   },
-  delete: (userWhereValue, cb) => {
-    orm.simpleDelete("roles", "id", "=", userWhereValue, (response) => {
-      cb(response);
-    });
+  delete: (userWhereValue, cb, errCb) => {
+    orm.simpleDelete(
+      "roles",
+      "id",
+      "=",
+      userWhereValue,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getBarChartData: (cb, errCb) => {
     orm.getRoleBarChartData(

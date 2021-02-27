@@ -4,9 +4,14 @@ const employee = require("../models/employee");
 
 // returns all employees
 router.get("/employees", (req, res) => {
-  employee.getTableData("id", (data) => {
-    res.json(data);
-  });
+  employee.getTableData(
+    "id",
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.post("/employees", (req, res) => {
@@ -60,8 +65,10 @@ router.put("/employee/:id", (req, res) => {
 router.delete("/employee/:id", (req, res) => {
   const id = req.params.id;
 
-  employee.deleteOne(id, (data) => {
-    res.json(data);
+  employee.deleteOne(id, (data) => res.json(data),
+  (err) => {
+    res.status(500);
+    res.json(err);
   });
 });
 

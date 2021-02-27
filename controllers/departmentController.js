@@ -41,9 +41,14 @@ router.put("/department/:id", (req, res) => {
 
 router.delete("/department/:id", (req, res) => {
   const departmentId = req.params.id;
-  department.delete(departmentId, (data) => {
-    res.json(data);
-  });
+  department.delete(
+    departmentId,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.get("/departments/name-id", (req, res) => {

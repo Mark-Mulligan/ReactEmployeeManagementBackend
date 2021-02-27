@@ -56,16 +56,18 @@ const orm = {
       }
     );
   },
-  simpleDelete: (table, whereKey, whereComparison, userWhereValue, cb) => {
+  simpleDelete: (table, whereKey, whereComparison, userWhereValue, cb, errCb) => {
     const queryString = `DELETE FROM ${table} where ${whereKey} ${whereComparison} ?;`;
 
     connection.query(queryString, [userWhereValue], (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
-  getEmployeeTableData: (orderBy, cb) => {
+  getEmployeeTableData: (orderBy, cb, errCb) => {
     const queryString = `Select a.id, a.first_name, a.last_name, roles.title, 
         departments.name as department, roles.salary, CONCAT(b.first_name, ' ', b.last_name) as manager
         FROM employees a join roles on a.role_id = roles.id 
@@ -74,8 +76,11 @@ const orm = {
         order by ${orderBy}`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
   getSingleEmployee: (id, cb, errCb) => {

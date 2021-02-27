@@ -43,9 +43,14 @@ router.put("/role/:id", (req, res) => {
 
 router.delete("/role/:id", (req, res) => {
   const roleId = req.params.id;
-  role.delete(roleId, (data) => {
-    res.json(data);
-  });
+  role.delete(
+    roleId,
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 router.get("/api/roles/chartdata", (req, res) => {

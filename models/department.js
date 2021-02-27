@@ -47,10 +47,15 @@ const department = {
       }
     );
   },
-  delete: (userWhereValue, cb) => {
-    orm.simpleDelete("departments", "id", "=", userWhereValue, (response) => {
-      cb(response);
-    });
+  delete: (userWhereValue, cb, errCb) => {
+    orm.simpleDelete(
+      "departments",
+      "id",
+      "=",
+      userWhereValue,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
 };
 
