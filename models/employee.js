@@ -6,10 +6,11 @@ const employee = {
       cb(response);
     });
   },
-  getBarChartData: (cb) => {
-    orm.getEmployeeBarChartData((response) => {
-      cb(response);
-    });
+  getBarChartData: (cb, errCb) => {
+    orm.getEmployeeBarChartData(
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getOne: (id, cb) => {
     orm.getSingleEmployee(id, (response) => {

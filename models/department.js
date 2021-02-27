@@ -7,10 +7,12 @@ const department = {
       (err) => errCb(err)
     );
   },
-  getOne: (departmentId, cb) => {
-    orm.getSingleDepartment(departmentId, (response) => {
-      cb(response);
-    });
+  getOne: (departmentId, cb, errCb) => {
+    orm.getSingleDepartment(
+      departmentId,
+      (response) => cb(response),
+      (err) => errCb(err)
+    );
   },
   getNamesAndIds: (cb) => {
     orm.simpleSelect(`name, id`, "departments", (response) => {

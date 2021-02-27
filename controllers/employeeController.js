@@ -61,9 +61,13 @@ router.delete("/employee/:id", (req, res) => {
 });
 
 router.get("/api/employees/chartdata", (req, res) => {
-  employee.getBarChartData((data) => {
-    res.json(data);
-  });
+  employee.getBarChartData(
+    (data) => res.json(data),
+    (err) => {
+      res.status(500);
+      res.json(err);
+    }
+  );
 });
 
 module.exports = router;

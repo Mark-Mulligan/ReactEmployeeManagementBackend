@@ -106,7 +106,7 @@ const orm = {
     });
   },
 
-  getSingleDepartment: (departmentId, cb) => {
+  getSingleDepartment: (departmentId, cb, errCb) => {
     const queryString = `SELECT departments.id, departments.name, 
     count(employees.id) as employees, 
     count(distinct roles.id) as roles, 
@@ -121,9 +121,11 @@ const orm = {
 	  having departments.id = ?;`;
 
     connection.query(queryString, [departmentId], (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     });
   },
 
@@ -173,14 +175,17 @@ const orm = {
       }
     });
   },
-  getEmployeeBarChartData: (cb) => {
+  getEmployeeBarChartData: (cb, errCb) => {
     const queryString = `SELECT COUNT(employees.id) as employees_hired, YEAR(employees.date_hired) as year
     FROM employees 
     GROUP BY YEAR(employees.date_hired);`;
 
     connection.query(queryString, (err, result) => {
-      if (err) throw err;
-      return cb(result);
+      if (err) {
+        return errCb(err);
+      } else {
+        return cb(result);
+      }
     })
   }
 };
